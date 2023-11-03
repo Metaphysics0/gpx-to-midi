@@ -1,10 +1,22 @@
 import { ExecuteService } from '$lib/server/executeService';
-import type { Actions } from '@sveltejs/kit';
+import { fail, type Actions } from '@sveltejs/kit';
 
 export const actions = {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	default: async (event) => {
+	default: async ({ request }) => {
+		const formData = await request.formData();
+		const file = formData.get('files') as File;
+		if (!(file as File).name || (file as File).name === 'undefined') {
+			return fail(400, {
+				error: true,
+				message: 'You must provide a file to upload'
+			});
+		}
+
 		const service = new ExecuteService();
-		await service.call();
+		const { file: convertedFileBuffer, name } = await service.writeFileAndConvert(file);
+		return {
+			name,
+			file: Array.from(new Uint8Array(convertedFileBuffer))
+		};
 	}
 } satisfies Actions;
