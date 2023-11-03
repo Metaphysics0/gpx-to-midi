@@ -3,6 +3,7 @@ import { exec as nodeExec } from 'node:child_process';
 import { readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import util from 'node:util';
+import.meta.glob('/');
 const exec = util.promisify(nodeExec);
 
 export class ExecuteService {
@@ -76,7 +77,7 @@ export class ExecuteService {
 	}
 
 	private getExecuteArgs(pathToRead?: string): string {
-		const pathToExe = path.join(process.cwd(), 'static', 'assets');
+		const pathToExe = path.join(process.cwd(), 'static/dotnet/GuitarProToMidi');
 		return [pathToExe, pathToRead || this.pathOfTestFile].join(' ');
 	}
 }
