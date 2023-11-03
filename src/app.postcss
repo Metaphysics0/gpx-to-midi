@@ -1,4 +1,28 @@
+@font-face {
+	/* Reference name */
+	font-family: 'Nunito';
+	/* For multiple files use commas, ex: url(), url(), ... */
+	src: url('/fonts/Nunito-VariableFont_wght.ttf'), url('/fonts/Nunito-VariableFont_slnt.ttf');
+}
+@font-face {
+	/* Reference name */
+	font-family: 'Quicksand';
+	/* For multiple files use commas, ex: url(), url(), ... */
+	src: url('/fonts/Quicksand-VariableFont_wght.ttf'), url('/fonts/Quicksand-VariableFont_slnt.ttf');
+}
+
 /* Write your global styles here, in PostCSS syntax */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root [data-theme='skeleton'] {
+	--theme-font-family-base: 'Nunito', sans-serif;
+	--theme-font-family-heading: 'Nunito', sans-serif;
+	/* ... */
+}
+:root [data-theme='gold-nouveau'] {
+	--theme-font-family-base: 'Quicksand', sans-serif;
+	--theme-font-family-heading: 'Quicksand', sans-serif;
+	/* ... */
+}

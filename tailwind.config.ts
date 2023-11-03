@@ -19,7 +19,7 @@ const config = {
 		// 4. Append the Skeleton plugin (after other plugins)
 		skeleton({
 			themes: {
-				preset: [{ name: 'skeleton', enhancements: true }, 'modern']
+				preset: [{ name: 'gold-nouveau', enhancements: true }, 'modern']
 			}
 		})
 	]

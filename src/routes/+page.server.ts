@@ -2,7 +2,6 @@ import { ExecuteService } from '$lib/server/executeService';
 import { fail, type Actions } from '@sveltejs/kit';
 
 export const actions = {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	default: async ({ request }) => {
 		const formData = await request.formData();
 		const file = formData.get('files') as File;
@@ -16,7 +15,6 @@ export const actions = {
 		const service = new ExecuteService();
 		const { file: convertedFileBuffer, name } = await service.writeFileAndConvert(file);
 		return {
-			success: true,
 			name,
 			file: Array.from(new Uint8Array(convertedFileBuffer))
 		};
