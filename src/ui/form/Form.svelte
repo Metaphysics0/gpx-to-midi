@@ -4,6 +4,8 @@
 	import { enhance } from '$app/forms';
 	import { triggerFileDownloadFromResponse } from '$lib/triggerDownloadFromResponse';
 	import Dropzone from './Dropzone.svelte';
+
+	let files: FileList;
 </script>
 
 <form
@@ -19,13 +21,12 @@
 			}
 
 			triggerFileDownloadFromResponse({ file, name });
+			update({ reset: true });
 		};
 	}}
 >
-	<Dropzone />
-	<button
-		type="submit"
-		class="mt-2.5 btn bg-gradient-to-br variant-gradient-primary-secondary w-fit mx-auto rounded-full"
+	<Dropzone bind:files />
+	<button type="submit" class="mt-2.5 btn variant-filled-primary w-fit mx-auto rounded-full"
 		>Convert!</button
 	>
 </form>

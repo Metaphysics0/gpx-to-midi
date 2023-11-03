@@ -3,7 +3,12 @@
 	import Icon from '@iconify/svelte';
 	import { FileDropzone } from '@skeletonlabs/skeleton';
 
-	let files: FileList;
+	export let files: FileList;
+
+	function removeFile() {
+		// @ts-ignore
+		files = Array.from(files).filter((file, idx) => idx !== 0);
+	}
 </script>
 
 <svelte:head>
@@ -33,9 +38,14 @@
 </FileDropzone>
 
 <div class="mt-3 mb-1.5 h-4 mx-auto w-fit flex flex-col items-center justify-center">
-	<p>
-		{#if files?.length}
-			{Array.from(files || []).map((file) => file.name)} ✅
-		{/if}
-	</p>
+	{#if files?.length}
+		<p class="flex items-center">
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<span class="mr-2 cursor-pointer opacity-70" on:click={removeFile}>
+				<Icon icon="fa-solid:times" />
+			</span>
+			{Array.from(files || []).map((file) => file.name)}
+		</p>
+	{/if}
 </div>
