@@ -77,7 +77,7 @@ export class ExecuteService {
 	}
 
 	private getExecuteArgs(pathToRead?: string): string {
-		const pathToExe = path.join(process.cwd(), 'static/dotnet/GuitarProToMidi');
+		const pathToExe = path.join(process.cwd(), 'dotnet/GuitarProToMidi');
 		return [pathToExe, pathToRead || this.pathOfTestFile].join(' ');
 	}
 }
