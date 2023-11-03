@@ -14,9 +14,10 @@ export const actions = {
 		}
 
 		const service = new ExecuteService();
-		const convertedFileBuffer = await service.writeFileAndConvert(file);
+		const { file: convertedFileBuffer, name } = await service.writeFileAndConvert(file);
 		return {
 			success: true,
+			name,
 			file: Array.from(new Uint8Array(convertedFileBuffer))
 		};
 	}

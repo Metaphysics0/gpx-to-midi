@@ -7,13 +7,20 @@ const exec = util.promisify(nodeExec);
 export class ExecuteService {
 	private readonly pathOfTestFile = 'static/assets/breathe.gp5';
 
-	async writeFileAndConvert(file: File): Promise<Buffer> {
+	async writeFileAndConvert(file: File): Promise<{ file: Buffer; name: string }> {
 		const uploadPath = await this.writeFileToTempFolder(file);
 		await this.executeConvert(uploadPath);
 		await this.deleteFile(uploadPath);
-		const pathOfConvertedFile = await this.getConvertedFilePath(uploadPath);
-		const convertedFile = await readFile(pathOfConvertedFile);
-		return convertedFile;
+
+		const convertedFilePath = await this.getConvertedFilePath(uploadPath);
+		const convertedFile = await readFile(convertedFilePath);
+
+		await this.deleteFile(convertedFilePath);
+
+		return {
+			name: this.getFileNameParts(uploadPath).name,
+			file: convertedFile
+		};
 	}
 
 	async deleteFile(uploadPath: string) {
@@ -41,7 +48,7 @@ export class ExecuteService {
 	}
 
 	private async getConvertedFilePath(uploadPath: string): Promise<string> {
-		const uploadedFileTimestamp = uploadPath.split('/').at(-1)?.split('__').at(0);
+		const { timestamp: uploadedFileTimestamp } = this.getFileNameParts(uploadPath);
 		if (!uploadedFileTimestamp) {
 			throw new Error('unable to find orignally uploaded file');
 		}
@@ -54,6 +61,17 @@ export class ExecuteService {
 		}
 
 		return env.PATH_TO_TEMP_FOLDER + '/' + convertedFileName;
+	}
+
+	private getFileNameParts(filePath: string) {
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		// eslint-disable-next-line no-unsafe-optional-chaining
+		const [timestamp, name] = filePath.split('/')?.at(-1)?.split('__');
+		return {
+			timestamp,
+			name: name.split('.')[0]
+		};
 	}
 
 	private getExecuteArgs(pathToRead?: string): string {

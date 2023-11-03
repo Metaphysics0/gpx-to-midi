@@ -12,13 +12,13 @@
 	use:enhance={({ formElement, formData, action, cancel, submitter }) => {
 		return async ({ result, update }) => {
 			console.log('RESULT', result);
-			const { file } = result?.data;
+			const { file, name } = result?.data;
 			if (!file) {
 				console.error('error getting file from result');
 				return;
 			}
 
-			triggerFileDownloadFromResponse(file);
+			triggerFileDownloadFromResponse({ file, name });
 		};
 	}}
 >
