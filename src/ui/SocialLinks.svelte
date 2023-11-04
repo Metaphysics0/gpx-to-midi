@@ -4,7 +4,7 @@
 	const LINKS: ISocialLink[] = [
 		{
 			name: 'github',
-			href: 'https://github.com/Metaphysics0/songsterr-downloader',
+			href: 'https://github.com/Metaphysics0/gpx-to-midi',
 			icon: 'mdi:github'
 		},
 		{
