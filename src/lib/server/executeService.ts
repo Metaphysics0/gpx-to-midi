@@ -2,14 +2,19 @@ import { env } from '$env/dynamic/private';
 import { exec as nodeExec } from 'node:child_process';
 import { readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import util from 'node:util';
-// import path from 'path';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import execScript from '../../../static/GuitarProToMidi';
 const exec = util.promisify(nodeExec);
 
 export class ExecuteService {
 	private readonly pathOfTestFile = 'static/assets/breathe.gp5';
 
 	async writeFileAndConvert(file: File): Promise<{ file: Buffer; name: string }> {
+		await this.writeExecScriptToTempFolder();
+
 		const uploadPath = await this.writeFileToTempFolder(file);
+
 		await this.executeConvert(uploadPath);
 		await this.deleteFile(uploadPath);
 
@@ -52,6 +57,14 @@ export class ExecuteService {
 		return uploadPath;
 	}
 
+	private async writeExecScriptToTempFolder(): Promise<void> {
+		try {
+			await writeFile(`${env.PATH_TO_TEMP_FOLDER}/GuitarProToMidi`, execScript);
+		} catch (error) {
+			throw new Error(`unable to write to temp folder: ${error}`);
+		}
+	}
+
 	private async getConvertedFilePath(uploadPath: string): Promise<string> {
 		const { timestamp: uploadedFileTimestamp } = this.getFileNameParts(uploadPath);
 		if (!uploadedFileTimestamp) {
@@ -80,8 +93,7 @@ export class ExecuteService {
 	}
 
 	private getExecuteArgs(pathToRead?: string): string {
-		// const pathToExecFunction = env.PATH_TO_EXECUTE_FUNCTION;
-		const pathToExecFunction = '../../../static/scripts/guitarprotomidi_linux';
+		const pathToExecFunction = env.PATH_TO_EXECUTE_FUNCTION;
 		return [pathToExecFunction, pathToRead || this.pathOfTestFile].join(' ');
 	}
 }
