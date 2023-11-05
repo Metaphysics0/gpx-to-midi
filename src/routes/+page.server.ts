@@ -12,11 +12,25 @@ export const actions = {
 			});
 		}
 
-		const service = new ExecuteService();
-		const { file: convertedFileBuffer, name } = await service.writeFileAndConvert(file);
-		return {
-			name,
-			file: Array.from(new Uint8Array(convertedFileBuffer))
-		};
+		await toHono(formData);
+		return {};
+		// const service = new ExecuteService();
+		// const { file: convertedFileBuffer, name } = await service.writeFileAndConvert(file);
+		// return {
+		// 	name,
+		// 	file: Array.from(new Uint8Array(convertedFileBuffer))
+		// };
 	}
 } satisfies Actions;
+
+async function toHono(formData: FormData) {
+	try {
+		const resp = await fetch('http://localhost:8000/convert', {
+			method: 'POST',
+			body: formData
+		});
+		console.log('RESPONSE', resp);
+	} catch (error) {
+		console.error('error', error);
+	}
+}
