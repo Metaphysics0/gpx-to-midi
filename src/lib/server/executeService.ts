@@ -29,9 +29,13 @@ export class ExecuteService {
 	}
 
 	private async executeConvert(uploadPath: string): Promise<void> {
-		const { stderr } = await exec(this.getExecuteArgs(uploadPath));
-		if (stderr) {
-			throw new Error(`exec error: ${stderr}`);
+		try {
+			const { stderr } = await exec(this.getExecuteArgs(uploadPath));
+			if (stderr) {
+				throw new Error(`exec error: ${stderr}`);
+			}
+		} catch (error) {
+			throw new Error(`error executing function: ${error}`);
 		}
 	}
 
