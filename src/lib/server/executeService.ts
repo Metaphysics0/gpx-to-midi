@@ -76,7 +76,7 @@ export class ExecuteService {
 	}
 
 	private getExecuteArgs(pathToRead?: string): string {
-		const pathToExecFunction = path.join(process.cwd(), 'scripts', 'GuitarProToMidi');
+		const pathToExecFunction = path.join(process.cwd(), 'scripts', 'guitarprotomidi');
 		return [pathToExecFunction, pathToRead || this.pathOfTestFile].join(' ');
 	}
 }
