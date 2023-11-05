@@ -2,7 +2,6 @@ import { env } from '$env/dynamic/private';
 import { exec as nodeExec } from 'node:child_process';
 import { readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import util from 'node:util';
-import path from 'path';
 // import path from 'path';
 const exec = util.promisify(nodeExec);
 
@@ -44,7 +43,7 @@ export class ExecuteService {
 		const uploadPath = `${env.PATH_TO_TEMP_FOLDER}/${Date.now()}__${file.name}`;
 
 		try {
-			await writeFile(uploadPath, new Uint8Array(Buffer.from(await file.arrayBuffer())));
+			await writeFile(uploadPath, Buffer.from(await file.arrayBuffer()));
 		} catch (error) {
 			console.error('upload failed:', error);
 			throw new Error('upload failed');
@@ -81,8 +80,10 @@ export class ExecuteService {
 	}
 
 	private getExecuteArgs(pathToRead?: string): string {
-		const pathToExecFunction = path.join(process.cwd(), 'scripts', 'guitarprotomidi');
-		// const pathToExecFunction = '/scripts/guitarprotomidi';
+		// const pathToExecFunction = path.join(process.cwd(), 'scripts', 'guitarprotomidi');
+		const pathToExecFunction = '/scripts/guitarprotomidi';
+		console.log('PLATFORM', process.platform);
+
 		return [pathToExecFunction, pathToRead || this.pathOfTestFile].join(' ');
 	}
 }
