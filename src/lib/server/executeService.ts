@@ -2,6 +2,7 @@ import { env } from '$env/dynamic/private';
 import { exec as nodeExec } from 'node:child_process';
 import { readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import util from 'node:util';
+import path from 'path';
 // import path from 'path';
 const exec = util.promisify(nodeExec);
 
@@ -80,8 +81,8 @@ export class ExecuteService {
 	}
 
 	private getExecuteArgs(pathToRead?: string): string {
-		// const pathToExecFunction = path.join(process.cwd(), 'scripts', 'guitarprotomidi');
-		const pathToExecFunction = '/scripts/guitarprotomidi';
+		const pathToExecFunction = path.join(process.cwd(), 'scripts', 'guitarprotomidi');
+		// const pathToExecFunction = '/scripts/guitarprotomidi';
 		return [pathToExecFunction, pathToRead || this.pathOfTestFile].join(' ');
 	}
 }
