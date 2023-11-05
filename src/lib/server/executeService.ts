@@ -1,9 +1,8 @@
 import { env } from '$env/dynamic/private';
 import { exec as nodeExec } from 'node:child_process';
 import { readFile, readdir, unlink, writeFile } from 'node:fs/promises';
-import path from 'node:path';
 import util from 'node:util';
-import.meta.glob('/');
+import path from 'path';
 const exec = util.promisify(nodeExec);
 
 export class ExecuteService {
@@ -77,7 +76,7 @@ export class ExecuteService {
 	}
 
 	private getExecuteArgs(pathToRead?: string): string {
-		const pathToExe = path.join(process.cwd(), 'dotnet/GuitarProToMidi');
-		return [pathToExe, pathToRead || this.pathOfTestFile].join(' ');
+		const pathToExecFunction = path.join(process.cwd(), 'files', 'GuitarProToMidi');
+		return [pathToExecFunction, pathToRead || this.pathOfTestFile].join(' ');
 	}
 }
