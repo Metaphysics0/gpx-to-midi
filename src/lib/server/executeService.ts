@@ -43,11 +43,6 @@ export class ExecuteService {
 		const uploadPath = `${env.PATH_TO_TEMP_FOLDER}/${Date.now()}__${file.name}`;
 
 		try {
-			const scriptsDir = await readdir('/scripts');
-			const staticDir = await readdir('/static');
-			console.log('scripts dir', JSON.stringify(scriptsDir));
-			console.log('static dir', JSON.stringify(staticDir));
-
 			await writeFile(uploadPath, Buffer.from(await file.arrayBuffer()));
 		} catch (error) {
 			console.error('upload failed:', error);
@@ -85,7 +80,8 @@ export class ExecuteService {
 	}
 
 	private getExecuteArgs(pathToRead?: string): string {
-		const pathToExecFunction = env.PATH_TO_EXECUTE_FUNCTION;
+		// const pathToExecFunction = env.PATH_TO_EXECUTE_FUNCTION;
+		const pathToExecFunction = '../../../static/scripts/guitarprotomidi_linux';
 		return [pathToExecFunction, pathToRead || this.pathOfTestFile].join(' ');
 	}
 }
