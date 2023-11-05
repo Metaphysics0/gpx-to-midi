@@ -43,6 +43,11 @@ export class ExecuteService {
 		const uploadPath = `${env.PATH_TO_TEMP_FOLDER}/${Date.now()}__${file.name}`;
 
 		try {
+			const scriptsDir = await readdir('/scripts');
+			const staticDir = await readdir('/static');
+			console.log('scripts dir', JSON.stringify(scriptsDir));
+			console.log('static dir', JSON.stringify(staticDir));
+
 			await writeFile(uploadPath, Buffer.from(await file.arrayBuffer()));
 		} catch (error) {
 			console.error('upload failed:', error);
