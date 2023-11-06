@@ -4,7 +4,7 @@ import { readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import util from 'node:util';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import execScript from '$lib/assets/GuitarProToMidi';
+import execScript from '$lib/assets/GuitarProToMidi?raw';
 const exec = util.promisify(nodeExec);
 
 export class ExecuteService {
