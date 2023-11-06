@@ -33,6 +33,8 @@ export class ExecuteService {
 
 	private async executeConvert(uploadPath: string): Promise<void> {
 		try {
+			await exec(['chmod+x', env.PATH_TO_EXECUTE_FUNCTION].join(' '));
+
 			const { stderr } = await exec(this.getExecuteArgs(uploadPath));
 			if (stderr) {
 				throw new Error(`exec error: ${stderr}`);
