@@ -59,7 +59,7 @@ export class ExecuteService {
 
 	private async writeExecScriptToTempFolder(): Promise<void> {
 		try {
-			await writeFile(`${env.PATH_TO_TEMP_FOLDER}/GuitarProToMidi`, execScript);
+			await writeFile(env.PATH_TO_EXECUTE_FUNCTION, execScript);
 		} catch (error) {
 			throw new Error(`unable to write to temp folder: ${error}`);
 		}
