@@ -2,9 +2,7 @@ import { env } from '$env/dynamic/private';
 import { exec as nodeExec } from 'node:child_process';
 import { readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import util from 'node:util';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import execScript from '$lib/assets/GuitarProToMidi?raw';
+import GuitarProToMidi from '$lib/assets/GuitarProToMidi?raw';
 const exec = util.promisify(nodeExec);
 
 export class ExecuteService {
@@ -59,7 +57,7 @@ export class ExecuteService {
 
 	private async writeExecScriptToTempFolder(): Promise<void> {
 		try {
-			await writeFile(env.PATH_TO_EXECUTE_FUNCTION, execScript);
+			await writeFile(`${env.PATH_TO_TEMP_FOLDER}/GuitarProToMidi`, GuitarProToMidi);
 		} catch (error) {
 			throw new Error(`unable to write to temp folder: ${error}`);
 		}
