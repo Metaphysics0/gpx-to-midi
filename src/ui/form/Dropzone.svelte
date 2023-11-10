@@ -22,7 +22,7 @@
 </svelte:head>
 
 <FileDropzone
-	name="files"
+	name="file"
 	accept={SUPPORTED_FILE_TYPES.join(',')}
 	bind:files
 	required
