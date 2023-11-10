@@ -9,7 +9,6 @@ export const actions = {
 				method: 'POST',
 				body: formData
 			});
-
 			return response.json();
 		} catch (error) {
 			console.log('error', error);
