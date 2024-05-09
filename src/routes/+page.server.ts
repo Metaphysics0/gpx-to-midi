@@ -2,10 +2,10 @@ import type { Actions } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 
 export const actions = {
-	default: async ({ request }) => {
-		const formData = await request.formData();
+	default: async ({ request, fetch }) => {
 		try {
-			const response = await fetch(`${env.API_HOST}/convert`, {
+			const formData = await request.formData();
+			const response = await fetch(`${env.CONVERT_API_HOST}/convert`, {
 				method: 'POST',
 				body: formData
 			});

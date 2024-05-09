@@ -12,7 +12,7 @@
 	method="POST"
 	class="flex flex-col"
 	enctype="multipart/form-data"
-	use:enhance={({ formElement, formData, action, cancel, submitter }) => {
+	use:enhance={() => {
 		return async ({ result, update }) => {
 			const { file, name } = result?.data;
 			if (!file) {
