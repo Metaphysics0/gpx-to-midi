@@ -4,24 +4,39 @@
 	import { enhance } from '$app/forms';
 	import { triggerFileDownloadFromResponse } from '$lib/triggerDownloadFromResponse';
 	import Dropzone from './Dropzone.svelte';
+	import { getToastStore } from '@skeletonlabs/skeleton';
+
+	const toastStore = getToastStore();
 
 	let files: FileList;
+	$: files;
 </script>
 
 <form
 	method="POST"
 	class="flex flex-col"
 	enctype="multipart/form-data"
-	use:enhance={({ formElement, formData, action, cancel, submitter }) => {
+	use:enhance={() => {
 		return async ({ result, update }) => {
-			const { file, name } = result?.data;
-			if (!file) {
-				console.error('error getting file from result');
-				return;
-			}
+			try {
+				const { file, name } = result?.data;
+				if (!file) {
+					console.error('error getting file from result');
+					toastStore.trigger({
+						message: 'Something went wrong during the convert 😢',
+						background: 'variant-filled-warning'
+					});
+					return;
+				}
 
-			triggerFileDownloadFromResponse({ file, name });
-			update({ reset: true });
+				triggerFileDownloadFromResponse({ file, name });
+				update({ reset: true });
+			} catch (error) {
+				toastStore.trigger({
+					message: 'Something went wrong during the convert 😢',
+					background: 'variant-filled-warning'
+				});
+			}
 		};
 	}}
 >
