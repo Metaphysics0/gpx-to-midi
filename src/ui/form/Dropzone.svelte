@@ -3,10 +3,13 @@
 	import Icon from '@iconify/svelte';
 	import { FileDropzone } from '@skeletonlabs/skeleton';
 	import { getToastStore } from '@skeletonlabs/skeleton';
+	import LoadingProgressRadial from '../common/LoadingProgressRadial.svelte';
 
 	const toastStore = getToastStore();
 
 	export let files: FileList;
+
+	export let isDownloadInProgress = false;
 
 	function removeFile() {
 		try {
@@ -15,6 +18,7 @@
 				throw new Error('Unable to locate dropzone element');
 			}
 			dropzoneElement.value = '';
+			files = dropzoneElement.files as FileList;
 			fileInputName = '';
 		} catch (error) {
 			console.warn(error);
@@ -61,12 +65,26 @@
 	class="max-w-4xl mx-auto rounded-sm"
 >
 	<svelte:fragment slot="lead">
-		<Icon icon="fa6-solid:file-arrow-up" class="text-4xl" />
+		{#if isDownloadInProgress}
+			<LoadingProgressRadial />
+		{:else}
+			<Icon icon="fa6-solid:file-arrow-up" class="text-4xl" />
+		{/if}
 	</svelte:fragment>
 	<svelte:fragment slot="message">
-		<strong>Upload a file</strong> or drag and drop
+		{#if isDownloadInProgress}
+			<strong> Converting... </strong>
+		{:else}
+			<strong>Upload a file</strong> or drag and drop
+		{/if}
 	</svelte:fragment>
-	<svelte:fragment slot="meta">{SUPPORTED_FILE_TYPES.join(', ')} allowed.</svelte:fragment>
+	<svelte:fragment slot="meta">
+		{#if isDownloadInProgress}
+			This may take a few seconds
+		{:else}
+			{SUPPORTED_FILE_TYPES.join(', ')} allowed.
+		{/if}
+	</svelte:fragment>
 </FileDropzone>
 
 <div class="mt-3 mb-1.5 h-4 mx-auto w-fit flex flex-col items-center justify-center">
