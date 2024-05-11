@@ -18,6 +18,7 @@
 				throw new Error('Unable to locate dropzone element');
 			}
 			dropzoneElement.value = '';
+			files = dropzoneElement.files as FileList;
 			fileInputName = '';
 		} catch (error) {
 			console.warn(error);

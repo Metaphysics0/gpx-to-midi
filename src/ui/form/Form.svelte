@@ -46,7 +46,9 @@
 	}}
 >
 	<Dropzone {isDownloadInProgress} bind:files />
-	<button type="submit" class="mt-2.5 btn variant-filled-primary w-fit mx-auto rounded-full"
-		>Convert!</button
+	<button
+		type="submit"
+		class="mt-2.5 btn variant-filled-primary w-fit mx-auto rounded-full"
+		disabled={!files}>Convert!</button
 	>
 </form>
