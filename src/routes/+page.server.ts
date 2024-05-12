@@ -8,7 +8,7 @@ export const actions = {
 			const formData = await request.formData();
 			ensureFormDataIsValid(formData);
 
-			const response = await fetch(`${env.CONVERT_API_HOST}/convert`, {
+			const response = await fetch(`${env.CONVERT_API_HOST}/convert/gp/midi`, {
 				method: 'POST',
 				body: formData
 			});
