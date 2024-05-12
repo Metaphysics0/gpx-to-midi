@@ -37,6 +37,7 @@
 				update({ reset: true });
 			} catch (error) {
 				isDownloadInProgress = false;
+				console.error(error);
 				toastStore.trigger({
 					message: 'Something went wrong during the convert 😢',
 					background: 'variant-filled-warning'
